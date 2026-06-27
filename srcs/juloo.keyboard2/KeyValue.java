@@ -761,26 +761,26 @@ public final class KeyValue implements Comparable<KeyValue>
       case "f11_placeholder": return placeholderKey(Placeholder.F11);
       case "f12_placeholder": return placeholderKey(Placeholder.F12);
 
-      // Korean Hangul
-      case "ㄱ": return makeHangulInitial("ㄱ", 0);
-      case "ㄲ": return makeHangulInitial("ㄲ", 1);
-      case "ㄴ": return makeHangulInitial("ㄴ", 2);
-      case "ㄷ": return makeHangulInitial("ㄷ", 3);
-      case "ㄸ": return makeHangulInitial("ㄸ", 4);
-      case "ㄹ": return makeHangulInitial("ㄹ", 5);
-      case "ㅁ": return makeHangulInitial("ㅁ", 6);
-      case "ㅂ": return makeHangulInitial("ㅂ", 7);
-      case "ㅃ": return makeHangulInitial("ㅃ", 8);
-      case "ㅅ": return makeHangulInitial("ㅅ", 9);
-      case "ㅆ": return makeHangulInitial("ㅆ", 10);
-      case "ㅇ": return makeHangulInitial("ㅇ", 11);
-      case "ㅈ": return makeHangulInitial("ㅈ", 12);
-      case "ㅉ": return makeHangulInitial("ㅉ", 13);
-      case "ㅊ": return makeHangulInitial("ㅊ", 14);
-      case "ㅋ": return makeHangulInitial("ㅋ", 15);
-      case "ㅌ": return makeHangulInitial("ㅌ", 16);
-      case "ㅍ": return makeHangulInitial("ㅍ", 17);
-      case "ㅎ": return makeHangulInitial("ㅎ", 18);
+      // Korean Hangul — plain Char jamo so HangulAutomaton can process them
+      case "ㄱ": return makeCharKey('ㄱ');
+      case "ㄲ": return makeCharKey('ㄲ');
+      case "ㄴ": return makeCharKey('ㄴ');
+      case "ㄷ": return makeCharKey('ㄷ');
+      case "ㄸ": return makeCharKey('ㄸ');
+      case "ㄹ": return makeCharKey('ㄹ');
+      case "ㅁ": return makeCharKey('ㅁ');
+      case "ㅂ": return makeCharKey('ㅂ');
+      case "ㅃ": return makeCharKey('ㅃ');
+      case "ㅅ": return makeCharKey('ㅅ');
+      case "ㅆ": return makeCharKey('ㅆ');
+      case "ㅇ": return makeCharKey('ㅇ');
+      case "ㅈ": return makeCharKey('ㅈ');
+      case "ㅉ": return makeCharKey('ㅉ');
+      case "ㅊ": return makeCharKey('ㅊ');
+      case "ㅋ": return makeCharKey('ㅋ');
+      case "ㅌ": return makeCharKey('ㅌ');
+      case "ㅍ": return makeCharKey('ㅍ');
+      case "ㅎ": return makeCharKey('ㅎ');
 
       /* Tamil letters should be smaller on the keyboard. */
       case "ஔ": case "ந": case "ல": case "ழ": case "௯": case "க":
