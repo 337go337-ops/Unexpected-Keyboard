@@ -88,7 +88,9 @@ public class Keyboard2 extends InputMethodService
   {
     _config.set_current_layout(l);
     _currentSpecialLayout = null;
-    _keyboard_layout_view.setKeyboard(current_layout());
+    KeyboardData layout = current_layout();
+    _keyboard_layout_view.setKeyboard(layout);
+    syncKoreanMode(layout);
   }
 
   void incrTextLayout(int delta)
@@ -101,6 +103,17 @@ public class Keyboard2 extends InputMethodService
   {
     _currentSpecialLayout = l;
     _keyboard_layout_view.setKeyboard(l);
+    syncKoreanMode(l);
+  }
+
+  /** Activate or deactivate Korean mode based on the layout's script field. */
+  private void syncKoreanMode(KeyboardData layout)
+  {
+    boolean isHangul = layout != null && "hangul".equals(layout.script);
+    if (isHangul == _inKoreanMode)
+      return;
+    _inKoreanMode = isHangul;
+    _keyeventhandler.setKoreanMode(isHangul, getCurrentInputConnection());
   }
 
   KeyboardData loadLayout(int layout_id)
@@ -253,6 +266,7 @@ public class Keyboard2 extends InputMethodService
       _currentSpecialLayout = _koreanLayout;
     }
     _keyboard_layout_view.setKeyboard(current_layout());
+    syncKoreanMode(current_layout());
     _keyeventhandler.started(_config);
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
@@ -494,20 +508,15 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_LANG:
-          InputConnection langIc = Keyboard2.this.getCurrentInputConnection();
           if (_inKoreanMode)
           {
-            _inKoreanMode = false;
-            _keyeventhandler.setKoreanMode(false, langIc);
             setTextLayout(_savedLayoutIndex);
           }
           else
           {
-            _inKoreanMode = true;
             _savedLayoutIndex = _config.get_current_layout();
             if (_koreanLayout == null)
               _koreanLayout = loadLayout(R.xml.hang_dubeolsik_kr);
-            _keyeventhandler.setKoreanMode(true, langIc);
             setSpecialLayout(_koreanLayout);
           }
           break;
