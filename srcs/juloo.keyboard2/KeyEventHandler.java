@@ -35,6 +35,10 @@ public final class KeyEventHandler
   /** Remember the action that was handled. This is used by autocorrect. */
   LastAction _last_action = null;
   LastAction _next_last_action = null;
+  /** Whether Korean (두벌식) composition mode is active. */
+  boolean _koreanMode = false;
+  /** Hangul syllable composition state machine. */
+  final HangulAutomaton _hangulAutomaton = new HangulAutomaton();
 
   public KeyEventHandler(IReceiver recv, Config config)
   {
@@ -50,6 +54,7 @@ public final class KeyEventHandler
   /** Editing just started. */
   public void started(Config conf)
   {
+    _hangulAutomaton.reset(); // new input field, discard any pending syllable
     InputConnection ic = _recv.getCurrentInputConnection();
     _autocap.started(conf, ic);
     _typedword.started(conf, ic);
@@ -110,10 +115,21 @@ public final class KeyEventHandler
     update_meta_state(mods);
     switch (key.getKind())
     {
-      case Char: send_text(String.valueOf(key.getChar())); break;
+      case Char:
+        char c = key.getChar();
+        if (_koreanMode && HangulAutomaton.isJamo(c) && !hasSystemModifiers()) {
+          InputConnection kconn = _recv.getCurrentInputConnection();
+          if (kconn != null) _hangulAutomaton.input(c, kconn);
+        } else {
+          send_text(String.valueOf(c));
+        }
+        break;
       case String: send_text(key.getString()); break;
       case Event: _recv.handle_event_key(key.getEvent()); break;
-      case Keyevent: send_key_down_up(key.getKeyevent()); break;
+      case Keyevent:
+        if (_koreanMode) commitKorean();
+        send_key_down_up(key.getKeyevent());
+        break;
       case Modifier: break;
       case Editing: handle_editing_key(key.getEditing()); break;
       case Compose_pending: _recv.set_compose_pending(true); break;
@@ -323,6 +339,7 @@ public final class KeyEventHandler
   /** [r] might be negative, in which case the direction is reversed. */
   void handle_slider(KeyValue.Slider s, int r, boolean key_down)
   {
+    if (_koreanMode) commitKorean();
     switch (s)
     {
       case Cursor_left: move_cursor(-r); break;
@@ -532,6 +549,7 @@ public final class KeyEventHandler
   /** Implement autocorrect when enabled in the settings. */
   void handle_space_bar()
   {
+    if (_koreanMode) commitKorean();
     if (_space_bar_auto_complete && _suggestions.count > 0
         && !_typedword.is_selection_not_empty()
         && _typedword.cursor_relative() == 0)
@@ -543,6 +561,10 @@ public final class KeyEventHandler
   /** Undo the last autocorrect. */
   void handle_backspace()
   {
+    if (_koreanMode) {
+      InputConnection conn = _recv.getCurrentInputConnection();
+      if (conn != null && _hangulAutomaton.backspace(conn)) return;
+    }
     if (_last_action == LastAction.SUGGESTION_ENTERED
         && last_replaced_word != null)
     {
@@ -554,6 +576,31 @@ public final class KeyEventHandler
     {
       send_key_down_up(KeyEvent.KEYCODE_DEL);
     }
+  }
+
+  /** Enable or disable Korean (두벌식) composition mode.
+   *  Commits any pending syllable before disabling. */
+  public void setKoreanMode(boolean enabled, InputConnection conn)
+  {
+    if (_koreanMode && !enabled && conn != null)
+      _hangulAutomaton.commit(conn);
+    _koreanMode = enabled;
+    if (!enabled)
+      _hangulAutomaton.reset();
+  }
+
+  /** Commit any pending Korean composing text to the InputConnection. */
+  void commitKorean()
+  {
+    InputConnection conn = _recv.getCurrentInputConnection();
+    if (conn != null) _hangulAutomaton.commit(conn);
+  }
+
+  /** Returns true if a system modifier (Ctrl / Alt / Meta) is currently active. */
+  private boolean hasSystemModifiers()
+  {
+    final int sys = KeyEvent.META_CTRL_ON | KeyEvent.META_ALT_ON | KeyEvent.META_META_ON;
+    return (_meta_state & sys) != 0;
   }
 
   public static interface IReceiver extends Suggestions.Callback

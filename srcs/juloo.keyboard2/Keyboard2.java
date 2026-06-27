@@ -494,9 +494,11 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_LANG:
+          InputConnection langIc = Keyboard2.this.getCurrentInputConnection();
           if (_inKoreanMode)
           {
             _inKoreanMode = false;
+            _keyeventhandler.setKoreanMode(false, langIc);
             setTextLayout(_savedLayoutIndex);
           }
           else
@@ -505,6 +507,7 @@ public class Keyboard2 extends InputMethodService
             _savedLayoutIndex = _config.get_current_layout();
             if (_koreanLayout == null)
               _koreanLayout = loadLayout(R.xml.hang_dubeolsik_kr);
+            _keyeventhandler.setKoreanMode(true, langIc);
             setSpecialLayout(_koreanLayout);
           }
           break;
