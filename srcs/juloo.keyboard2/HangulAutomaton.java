@@ -168,11 +168,13 @@ public class HangulAutomaton {
    * Must only be called when isJamo(c) is true.
    */
   public void input(char c, InputConnection conn) {
+    conn.beginBatchEdit();
     int vi = jungsungIdx(c);
-    if (vi >= 0) { inputVowel(vi, conn); return; }
+    if (vi >= 0) { inputVowel(vi, conn); conn.endBatchEdit(); return; }
     int ci = chosungIdx(c);
     int ji = jongsungIdx(c);
     inputConsonant(ci, ji, c, conn);
+    conn.endBatchEdit();
   }
 
   private void inputVowel(int vi, InputConnection conn) {
