@@ -42,6 +42,12 @@ public class Keyboard2 extends InputMethodService
   private KeyEventHandler _keyeventhandler;
   /** If not 'null', the layout to use instead of [_config.current_layout]. */
   private KeyboardData _currentSpecialLayout;
+  /** True when the user has toggled into Korean mode via switch_lang. */
+  private boolean _inKoreanMode = false;
+  /** Layout index saved before switching to Korean mode. */
+  private int _savedLayoutIndex = 0;
+  /** Korean layout instance, loaded lazily. */
+  private KeyboardData _koreanLayout = null;
   /** Layout associated with the currently selected locale. Not 'null'. */
   private KeyboardData _localeTextLayout;
   /** Installed and current locales. */
@@ -240,6 +246,12 @@ public class Keyboard2 extends InputMethodService
     _config.editor_config.refresh(info, getResources());
     refresh_config();
     _currentSpecialLayout = refresh_special_layout();
+    if (_currentSpecialLayout == null && _inKoreanMode)
+    {
+      if (_koreanLayout == null)
+        _koreanLayout = loadLayout(R.xml.hang_dubeolsik_kr);
+      _currentSpecialLayout = _koreanLayout;
+    }
     _keyboard_layout_view.setKeyboard(current_layout());
     _keyeventhandler.started(_config);
     setInputView(_keyboard_container_view);
@@ -479,6 +491,22 @@ public class Keyboard2 extends InputMethodService
           break;
         case HIDE_SELF:
           Keyboard2.this.requestHideSelf(0);
+          break;
+
+        case SWITCH_LANG:
+          if (_inKoreanMode)
+          {
+            _inKoreanMode = false;
+            setTextLayout(_savedLayoutIndex);
+          }
+          else
+          {
+            _inKoreanMode = true;
+            _savedLayoutIndex = _config.get_current_layout();
+            if (_koreanLayout == null)
+              _koreanLayout = loadLayout(R.xml.hang_dubeolsik_kr);
+            setSpecialLayout(_koreanLayout);
+          }
           break;
       }
     }
