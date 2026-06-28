@@ -526,6 +526,10 @@ public class Keyboard2 extends InputMethodService
           for (int i = 0; i < _config.layouts.size(); i++)
           {
             KeyboardData ld = _config.layouts.get(i);
+            // A 'null' entry means "system layout" — resolve it so a Korean
+            // subtype (default_layout=hang_dubeolsik_kr) is detected too.
+            if (ld == null)
+              ld = _localeTextLayout;
             if (ld == null)
               continue;
             if ("hangul".equals(ld.script) != curHangul)
