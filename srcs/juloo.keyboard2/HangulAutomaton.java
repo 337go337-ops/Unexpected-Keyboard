@@ -281,21 +281,11 @@ public class HangulAutomaton {
       }
       updateComposing(conn);
     } else if (_jung >= 0) {
-      // Decompose vowel
+      // Decompose vowel: compound → its first component, else drop to the
+      // chosung (가→ㄱ, 아→ㅇ), matching standard Korean IME backspace.
       int first = decomposeJung(_jung);
-      if (first >= 0) {
-        _jung = first;
-        updateComposing(conn);
-      } else {
-        _jung = -1;
-        if (_cho == CHOSUNG_IEUNG) {
-          // Vowel-initial syllable (ㅇ was synthetic): delete entirely
-          conn.commitText("", 1);
-          _cho = _jong = -1;
-        } else {
-          updateComposing(conn);
-        }
-      }
+      _jung = (first >= 0) ? first : -1;
+      updateComposing(conn);
     } else {
       // Only chosung: delete the composing consonant entirely
       conn.commitText("", 1);

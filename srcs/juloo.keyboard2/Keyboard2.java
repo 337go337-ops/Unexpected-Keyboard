@@ -44,8 +44,6 @@ public class Keyboard2 extends InputMethodService
   private KeyboardData _currentSpecialLayout;
   /** True when the user has toggled into Korean mode via switch_lang. */
   private boolean _inKoreanMode = false;
-  /** Layout index saved before switching to Korean mode. */
-  private int _savedLayoutIndex = 0;
   /** Korean layout instance, loaded lazily. */
   private KeyboardData _koreanLayout = null;
   /** Layout associated with the currently selected locale. Not 'null'. */
@@ -114,8 +112,6 @@ public class Keyboard2 extends InputMethodService
     boolean isHangul = layout != null && "hangul".equals(layout.script);
     if (isHangul == _inKoreanMode)
       return;
-    if (isHangul)
-      _savedLayoutIndex = _config.get_current_layout();
     _inKoreanMode = isHangul;
     _keyeventhandler.setKoreanMode(isHangul, getCurrentInputConnection());
   }

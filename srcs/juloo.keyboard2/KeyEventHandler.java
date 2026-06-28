@@ -131,7 +131,12 @@ public final class KeyEventHandler
         if (_koreanMode) commitKorean();
         send_text(key.getString());
         break;
-      case Event: _recv.handle_event_key(key.getEvent()); break;
+      case Event:
+        // Finalize a pending syllable before an event may swap the input view
+        // (emoji/clipboard/numpad/layout switch).
+        if (_koreanMode) commitKorean();
+        _recv.handle_event_key(key.getEvent());
+        break;
       case Keyevent:
         if (_koreanMode) commitKorean();
         send_key_down_up(key.getKeyevent());
@@ -307,6 +312,11 @@ public final class KeyEventHandler
   @SuppressLint("InlinedApi")
   void handle_editing_key(KeyValue.Editing ev)
   {
+    // Finalize a pending Korean syllable before an editing action operates on
+    // committed text. Backspace and space have their own composing-aware paths.
+    if (_koreanMode && ev != KeyValue.Editing.BACKSPACE
+        && ev != KeyValue.Editing.SPACE_BAR)
+      commitKorean();
     switch (ev)
     {
       case COPY: if(_typedword.is_selection_not_empty()) send_context_menu_action(android.R.id.copy); break;

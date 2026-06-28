@@ -39,7 +39,7 @@ Useful links.
 -->
 <keyboard name="QWERTY (US)" script="latin" bottom_row="false">
   <row>
-    <key c="q" ne="1"/>
+    <key c="q" ne="1" se="loc esc"/>
     <key c="w" nw="~" ne="2"/>
     <key c="e" nw="!" ne="3"/>
     <key c="r" nw="\@" ne="4"/>

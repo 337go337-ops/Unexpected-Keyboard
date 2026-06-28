@@ -271,6 +271,10 @@ public final class KeyModifier
       case 'ㅣ': return 'l'; case 'ㅋ': return 'z'; case 'ㅌ': return 'x';
       case 'ㅊ': return 'c'; case 'ㅍ': return 'v'; case 'ㅠ': return 'b';
       case 'ㅜ': return 'n'; case 'ㅡ': return 'm';
+      // Tense consonants and shifted vowels share their base key's position.
+      case 'ㅃ': return 'q'; case 'ㅉ': return 'w'; case 'ㄸ': return 'e';
+      case 'ㄲ': return 'r'; case 'ㅆ': return 't'; case 'ㅒ': return 'o';
+      case 'ㅖ': return 'p';
       default:  return c;
     }
   }
