@@ -17,7 +17,7 @@ cyrl_yawerty: Layout includes some ASCII punctuation but not all, missing: #, $,
 cyrl_yxukeng_os: Layout includes some ASCII punctuation but not all, missing: ", #, $, &, ', @, [, ], ~
 deva_alt: Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
 deva_inscript: Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
-hang_dubeolsik_kr: Layout redefines the bottom row but some important keys are missing, missing: fn, loc meta, loc switch_greekmath, loc voice_typing
+hang_dubeolsik_kr: Layout redefines the bottom row but some important keys are missing, missing: fn, loc change_method, loc meta, loc switch_greekmath, loc voice_typing
 hebr_1_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 hebr_2_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 kann_kannada: Layout includes some ASCII punctuation but not all, missing: #, $, %, (, ), *, +, /, <, =, >, [, \, ], ^, `, {, |, }, ~
@@ -28,7 +28,7 @@ latn_colemak: Some keys contain whitespaces, unexpected:  ́
 latn_dvorak: Missing important key, missing: loc capslock
 latn_neo2: Layout redefines the bottom row but some important keys are missing, missing: loc switch_clipboard
 latn_qwerty_us: Missing programming keys, missing: loc esc, loc tab
-latn_qwerty_us: Layout redefines the bottom row but some important keys are missing, missing: fn, loc meta, loc switch_greekmath
+latn_qwerty_us: Layout redefines the bottom row but some important keys are missing, missing: fn, loc change_method, loc meta, loc switch_greekmath
 latn_qwertz_cz_multifunctional: Layout includes some ASCII punctuation but not all, missing: `
 latn_qwertz_sk: Layout includes some ASCII punctuation but not all, missing: `
 latn_qzerty_it: Layout includes some ASCII punctuation but not all, missing: #, $, \, `, ~
