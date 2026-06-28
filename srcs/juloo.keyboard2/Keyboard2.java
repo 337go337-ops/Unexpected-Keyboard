@@ -515,18 +515,36 @@ public class Keyboard2 extends InputMethodService
           break;
 
         case SWITCH_LANG:
-          if (_inKoreanMode)
+        {
+          // Toggle between the current script and the opposite one
+          // (hangul ↔ latin) among the enabled layouts, using the same
+          // mechanism as the space-bar layout cycling so the keyboard state
+          // never desyncs.
+          KeyboardData cur = current_layout_unmodified();
+          boolean curHangul = cur != null && "hangul".equals(cur.script);
+          int target = -1;
+          for (int i = 0; i < _config.layouts.size(); i++)
           {
-            setTextLayout(_savedLayoutIndex);
+            KeyboardData ld = _config.layouts.get(i);
+            if (ld == null)
+              continue;
+            if ("hangul".equals(ld.script) != curHangul)
+            {
+              target = i;
+              break;
+            }
           }
-          else
+          if (target >= 0)
+            setTextLayout(target);
+          else if (!curHangul)
           {
-            _savedLayoutIndex = _config.get_current_layout();
+            // No hangul layout enabled — fall back to the bundled one.
             if (_koreanLayout == null)
               _koreanLayout = loadLayout(R.xml.hang_dubeolsik_kr);
             setSpecialLayout(_koreanLayout);
           }
           break;
+        }
       }
     }
 

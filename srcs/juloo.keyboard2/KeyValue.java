@@ -646,7 +646,7 @@ public final class KeyValue implements Comparable<KeyValue>
       case "voice_typing": return eventKey(0xE015, Event.SWITCH_VOICE_TYPING, FLAG_SMALLER_FONT);
       case "voice_typing_chooser": return VOICE_TYPING_CHOOSER;
       case "hide_self": return eventKey("⊻", Event.HIDE_SELF, FLAG_SMALLER_FONT);
-      case "switch_lang": return eventKey("한/A", Event.SWITCH_LANG, FLAG_SMALLER_FONT);
+      case "switch_lang": return eventKey("한/영", Event.SWITCH_LANG, FLAG_SMALLER_FONT);
 
       /* Key events */
       case "esc": return keyeventKey("Esc", KeyEvent.KEYCODE_ESCAPE, FLAG_SMALLER_FONT);
