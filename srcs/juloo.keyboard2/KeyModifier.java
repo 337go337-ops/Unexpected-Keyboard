@@ -225,6 +225,9 @@ public final class KeyModifier
     {
       case Char:
         char kc = k.getChar();
+        char tense = korean_shift(kc);
+        if (tense != kc)
+          return k.withChar(tense);
         char c = Character.toUpperCase(kc);
         return (kc == c) ? k : k.withChar(c);
       case String:
@@ -232,6 +235,23 @@ public final class KeyModifier
         String s = Utils.capitalize_string(ks);
         return s.equals(ks) ? k : KeyValue.makeStringKey(s, k.getFlags());
       default: return k;
+    }
+  }
+
+  /** Dubeolsik shift: tense consonants (ㄲㄸㅃㅆㅉ) and the two shifted
+      vowels (ㅒ ㅖ). Returns the input unchanged if not a Korean jamo. */
+  private static char korean_shift(char c)
+  {
+    switch (c)
+    {
+      case 'ㄱ': return 'ㄲ';
+      case 'ㄷ': return 'ㄸ';
+      case 'ㅂ': return 'ㅃ';
+      case 'ㅅ': return 'ㅆ';
+      case 'ㅈ': return 'ㅉ';
+      case 'ㅐ': return 'ㅒ';
+      case 'ㅔ': return 'ㅖ';
+      default:  return c;
     }
   }
 

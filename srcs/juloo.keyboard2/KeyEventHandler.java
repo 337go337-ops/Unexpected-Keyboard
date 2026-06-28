@@ -121,10 +121,16 @@ public final class KeyEventHandler
           InputConnection kconn = _recv.getCurrentInputConnection();
           if (kconn != null) _hangulAutomaton.input(c, kconn);
         } else {
+          // Flush any pending syllable before committing a non-jamo character,
+          // otherwise the active composing region gets replaced/reordered.
+          if (_koreanMode) commitKorean();
           send_text(String.valueOf(c));
         }
         break;
-      case String: send_text(key.getString()); break;
+      case String:
+        if (_koreanMode) commitKorean();
+        send_text(key.getString());
+        break;
       case Event: _recv.handle_event_key(key.getEvent()); break;
       case Keyevent:
         if (_koreanMode) commitKorean();
