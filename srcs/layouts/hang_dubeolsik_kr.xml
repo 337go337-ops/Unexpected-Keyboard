@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 두벌식 한글. 숫자·기호는 모서리(스와이프)로 입력, 메인 자모 배열은 삼성식.
      복받침(ㄳㄺ…)·복모음(ㅘㅙ…)은 HangulAutomaton이 연속 입력으로 자동 조합.
-     쌍자음(ㅃㅉㄸㄲㅆ)·ㅒ/ㅖ는 shift 또는 모서리(key4)로 입력. -->
+     쌍자음(ㅃㅉㄸㄲㅆ)·ㅒ/ㅖ는 shift 또는 모서리로 입력. -->
 <keyboard name="두벌식 (Korean)" script="hangul" bottom_row="false">
   <row>
     <key key0="ㅂ" key2="1" key3="ㅄ" key4="ㅃ"/>
@@ -10,10 +10,10 @@
     <key key0="ㄱ" key1="\@" key2="4" key3="ㄺ" key4="ㄲ"/>
     <key key0="ㅅ" key1="\#" key2="5" key3="ㄳ" key4="ㅆ"/>
     <key key0="ㅛ" key1="$" key2="6"/>
-    <key key0="ㅕ" key1="%" key2="7" key3="ㅖ"/>
+    <key key0="ㅕ" key1="%" key2="7"/>
     <key key0="ㅑ" key1="^" key2="8"/>
     <key key0="ㅐ" key1="&amp;" key2="9" key3="ㅒ"/>
-    <key key0="ㅔ" key1="*" key2="0" key3="ㅙ"/>
+    <key key0="ㅔ" key1="*" key2="0" key3="ㅖ"/>
     <key role="action" key0="delete"/>
   </row>
   <row>
@@ -22,7 +22,7 @@
     <key key0="ㅇ" key3="ㄻ"/>
     <key key0="ㄹ" key1="-" key2="_" key3="ㄽ"/>
     <key key0="ㅎ" key1="=" key2="+" key3="ㅀ" key4="ㄶ"/>
-    <key key0="ㅗ" key1="{" key2="}" key3="ㅚ"/>
+    <key key0="ㅗ" key1="{" key2="}" key3="ㅚ" key4="ㅙ"/>
     <key key0="ㅓ" key1="[" key2="]" key3="ㅘ"/>
     <key key0="ㅏ" key1="(" key2=")"/>
     <key key0="ㅣ" key2="|" key3="\\"/>
@@ -39,10 +39,10 @@
     <key width="1.5" role="action" key0="backspace"/>
   </row>
   <row height="0.95">
-    <key width="1.7" role="action" key0="ctrl" key2="loc meta" key3="loc switch_clipboard" key4="switch_numeric"/>
+    <key width="1.7" role="action" key0="ctrl" key3="loc switch_clipboard" key4="switch_numeric"/>
     <key width="1.1" role="action" key0="switch_lang" key1="loc alt" key2="loc change_method" key3="switch_emoji" key4="config"/>
     <key width="4.4" role="space_bar" key0="space" key7="switch_forward" key8="switch_backward" key5="cursor_left" key6="cursor_right"/>
-    <key width="1.1" role="action" key0="loc compose" key7="up" key6="right" key5="left" key8="down"/>
+    <key width="1.1" role="action" key0="loc compose" key7="up" key6="right" key5="left" key8="down" key1="loc home" key2="loc page_up" key3="loc end" key4="loc page_down"/>
     <key width="1.7" role="action" key0="enter" key2="action"/>
   </row>
 </keyboard>
