@@ -51,7 +51,7 @@ Useful links.
     <key c="p" ne="0"/>
   </row>
   <row>
-    <key shift="0.5" c="a" nw="loc tab" ne="`"/>
+    <key shift="0.5" c="a" nw="tab" ne="`" sw="⇤:shift,tab"/>
     <key c="s" ne="loc §" sw="loc ß"/>
     <key c="d"/>
     <key c="f"/>

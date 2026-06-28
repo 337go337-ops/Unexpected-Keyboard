@@ -17,7 +17,7 @@
     <key role="action" key0="delete"/>
   </row>
   <row>
-    <key shift="0.5" key0="ㅁ" key2="`"/>
+    <key shift="0.5" key0="ㅁ" key1="tab" key2="`" key3="⇤:shift,tab"/>
     <key key0="ㄴ" key3="ㄼ"/>
     <key key0="ㅇ" key3="ㄻ"/>
     <key key0="ㄹ" key1="-" key2="_" key3="ㄽ"/>
