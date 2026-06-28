@@ -17,7 +17,7 @@ cyrl_yawerty: Layout includes some ASCII punctuation but not all, missing: #, $,
 cyrl_yxukeng_os: Layout includes some ASCII punctuation but not all, missing: ", #, $, &, ', @, [, ], ~
 deva_alt: Layout includes some ASCII punctuation but not all, missing: #, $, %, &, ', (, ), *, +, ., /, :, <, =, >, [, \, ], ^, _, `, {, |, }, ~
 deva_inscript: Layout includes some ASCII punctuation but not all, missing: ", $, ', ^, _, `, |
-hang_dubeolsik_kr: Layout redefines the bottom row but some important keys are missing, missing: fn, loc change_method, loc meta, loc switch_greekmath, loc voice_typing
+hang_dubeolsik_kr: Layout redefines the bottom row but some important keys are missing, missing: fn, loc change_method, loc meta, loc switch_greekmath, loc voice_typing, switch_backward, switch_forward
 hebr_1_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 hebr_2_il: Layout includes some ASCII punctuation but not all, missing: (, ), <, >, [, ], {, }
 kann_kannada: Layout includes some ASCII punctuation but not all, missing: #, $, %, (, ), *, +, /, <, =, >, [, \, ], ^, `, {, |, }, ~

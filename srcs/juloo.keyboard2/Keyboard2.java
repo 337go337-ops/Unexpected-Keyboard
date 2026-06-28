@@ -259,12 +259,6 @@ public class Keyboard2 extends InputMethodService
     _config.editor_config.refresh(info, getResources());
     refresh_config();
     _currentSpecialLayout = refresh_special_layout();
-    if (_currentSpecialLayout == null && _inKoreanMode)
-    {
-      if (_koreanLayout == null)
-        _koreanLayout = loadLayout(R.xml.hang_dubeolsik_kr);
-      _currentSpecialLayout = _koreanLayout;
-    }
     KeyboardData startLayout = current_layout();
     _keyboard_layout_view.setKeyboard(startLayout);
     syncKoreanMode(startLayout);
