@@ -132,13 +132,13 @@ public final class Config
     {
       if ("landscape".equals(show_numpad_s))
         show_numpad = true;
-      keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_landscape_unfolded" : "keyboard_height_landscape", 50);
+      keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_landscape_unfolded" : "keyboard_height_landscape", 55);
       characterSizeScale = 1.25f;
       split_layout = _prefs.getString("split_layout", "landscape").equals("landscape");
     }
     else
     {
-      keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_unfolded" : "keyboard_height", 35);
+      keyboardHeightPercent = _prefs.getInt(foldable_unfolded ? "keyboard_height_unfolded" : "keyboard_height", 42);
       split_layout = false;
     }
     layouts = LayoutsPreference.load_from_preferences(res, _prefs);

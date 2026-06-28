@@ -255,6 +255,26 @@ public final class KeyModifier
     }
   }
 
+  /** Dubeolsik (두벌식) jamo → the latin letter sharing its QWERTY position.
+      Used so Ctrl/Alt shortcuts (and their key labels) on the hangul layout
+      match the latin layout. Returns the input unchanged if not a jamo. */
+  private static char dubeolsik_to_latin(char c)
+  {
+    switch (c)
+    {
+      case 'ㅂ': return 'q'; case 'ㅈ': return 'w'; case 'ㄷ': return 'e';
+      case 'ㄱ': return 'r'; case 'ㅅ': return 't'; case 'ㅛ': return 'y';
+      case 'ㅕ': return 'u'; case 'ㅑ': return 'i'; case 'ㅐ': return 'o';
+      case 'ㅔ': return 'p'; case 'ㅁ': return 'a'; case 'ㄴ': return 's';
+      case 'ㅇ': return 'd'; case 'ㄹ': return 'f'; case 'ㅎ': return 'g';
+      case 'ㅗ': return 'h'; case 'ㅓ': return 'j'; case 'ㅏ': return 'k';
+      case 'ㅣ': return 'l'; case 'ㅋ': return 'z'; case 'ㅌ': return 'x';
+      case 'ㅊ': return 'c'; case 'ㅍ': return 'v'; case 'ㅠ': return 'b';
+      case 'ㅜ': return 'n'; case 'ㅡ': return 'm';
+      default:  return c;
+    }
+  }
+
   private static KeyValue apply_fn(KeyValue k)
   {
     if (_modmap != null)
@@ -349,6 +369,12 @@ public final class KeyModifier
     switch (k.getKind())
     {
       case Char:
+      {
+        // Dubeolsik jamo → the latin letter on the same QWERTY position, so a
+        // held Ctrl/Alt both labels the key in latin and sends the shortcut.
+        char latin = dubeolsik_to_latin(k.getChar());
+        if (latin != k.getChar())
+          k = KeyValue.makeCharKey(latin);
         switch (k.getChar())
         {
           case 'a': e = KeyEvent.KEYCODE_A; break;
@@ -408,6 +434,7 @@ public final class KeyModifier
           default: return k;
         }
         break;
+      }
       case Editing:
         switch (k.getEditing())
         {
