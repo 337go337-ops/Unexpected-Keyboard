@@ -103,7 +103,9 @@ public class Keyboard2 extends InputMethodService
   {
     _currentSpecialLayout = l;
     _keyboard_layout_view.setKeyboard(l);
-    syncKoreanMode(l);
+    // Only activate Korean mode; overlay layouts (numpad, etc.) must not deactivate it.
+    if (l != null && "hangul".equals(l.script) && !_inKoreanMode)
+      syncKoreanMode(l);
   }
 
   /** Activate or deactivate Korean mode based on the layout's script field. */
@@ -112,6 +114,8 @@ public class Keyboard2 extends InputMethodService
     boolean isHangul = layout != null && "hangul".equals(layout.script);
     if (isHangul == _inKoreanMode)
       return;
+    if (isHangul)
+      _savedLayoutIndex = _config.get_current_layout();
     _inKoreanMode = isHangul;
     _keyeventhandler.setKoreanMode(isHangul, getCurrentInputConnection());
   }
@@ -265,8 +269,9 @@ public class Keyboard2 extends InputMethodService
         _koreanLayout = loadLayout(R.xml.hang_dubeolsik_kr);
       _currentSpecialLayout = _koreanLayout;
     }
-    _keyboard_layout_view.setKeyboard(current_layout());
-    syncKoreanMode(current_layout());
+    KeyboardData startLayout = current_layout();
+    _keyboard_layout_view.setKeyboard(startLayout);
+    syncKoreanMode(startLayout);
     _keyeventhandler.started(_config);
     setInputView(_keyboard_container_view);
     Logs.debug_startup_input_view(info, _config);
@@ -429,7 +434,9 @@ public class Keyboard2 extends InputMethodService
 
         case SWITCH_TEXT:
           _currentSpecialLayout = null;
-          _keyboard_layout_view.setKeyboard(current_layout());
+          KeyboardData tl = current_layout();
+          _keyboard_layout_view.setKeyboard(tl);
+          syncKoreanMode(tl);
           break;
 
         case SWITCH_NUMERIC:

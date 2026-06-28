@@ -114,7 +114,7 @@ public class HangulAutomaton {
   }
 
   private static boolean isCompoundJong(int j) {
-    return j==3||j==5||j==6||j==9||j==10||j==11||j==12||j==13||j==14||j==15||j==18;
+    return splitJong(j) != null;
   }
 
   // Split compound jongsung: [0] = first part (stays as jongsung),
@@ -283,8 +283,19 @@ public class HangulAutomaton {
     } else if (_jung >= 0) {
       // Decompose vowel
       int first = decomposeJung(_jung);
-      _jung = (first >= 0) ? first : -1;
-      updateComposing(conn);
+      if (first >= 0) {
+        _jung = first;
+        updateComposing(conn);
+      } else {
+        _jung = -1;
+        if (_cho == CHOSUNG_IEUNG) {
+          // Vowel-initial syllable (ㅇ was synthetic): delete entirely
+          conn.commitText("", 1);
+          _cho = _jong = -1;
+        } else {
+          updateComposing(conn);
+        }
+      }
     } else {
       // Only chosung: delete the composing consonant entirely
       conn.commitText("", 1);

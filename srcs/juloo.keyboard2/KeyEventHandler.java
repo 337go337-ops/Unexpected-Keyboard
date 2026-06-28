@@ -582,8 +582,10 @@ public final class KeyEventHandler
    *  Commits any pending syllable before disabling. */
   public void setKoreanMode(boolean enabled, InputConnection conn)
   {
-    if (_koreanMode && !enabled && conn != null)
-      _hangulAutomaton.commit(conn);
+    if (_koreanMode && !enabled) {
+      InputConnection c = (conn != null) ? conn : _recv.getCurrentInputConnection();
+      if (c != null) _hangulAutomaton.commit(c);
+    }
     _koreanMode = enabled;
     if (!enabled)
       _hangulAutomaton.reset();
